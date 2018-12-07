@@ -154,7 +154,7 @@
     　　color:#A4B9E0!important;
   }
   input:-ms-input-placeholder { /* Internet Explorer 10+*/
-    　　color:#A4B9E0;
+    　　color:#A4B9E0!important;
   }
   #login{
     position: absolute;
