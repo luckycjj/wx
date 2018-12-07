@@ -169,7 +169,7 @@
   }
   #logo{
     width:5.33rem;
-    margin:3.68rem auto  1.28rem auto;
+    margin:2.14rem auto  1.28rem auto;
   }
   .modelView{
     width:7.8rem;
