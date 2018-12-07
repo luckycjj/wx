@@ -12,6 +12,7 @@
 </script>
 
 <style>
+  @import "./css/tankuang.css";
   input, button, select, textarea {
     outline: none;
     /* -webkit-appearance: none;*/

@@ -6,7 +6,7 @@
       <input autocomplete="off"  @keyup="filterInput()" type="tel" v-model="mobile" placeholder="请输入手机号" maxlength="11"/>
     </div>
     <div class="modelView">
-      <input autocomplete="off"  @input="filterInput()"  v-model="password" placeholder="请输入验证码"/>
+      <input autocomplete="off"  @input="filterInput()" maxlength="6"  v-model="password" placeholder="请输入验证码"/>
       <span class="verificationCome" @touchend="verificationCome()">{{name}}</span>
       <div class="clearBoth"></div>
     </div>
@@ -32,6 +32,56 @@
     methods:{
       go:function () {
 
+      },
+      loginOn:function () {
+        var _this = this;
+        if(_this.mobile == ""){
+          bomb.first("请输入手机号");
+          return false;
+        }
+        if(_this.password == ""){
+          bomb.first("请输入验证码");
+          return false;
+        }
+        var check = androidIos.telCheck(_this.mobile);
+        if(!check || _this.mobile.length < 11){
+          bomb.first("请输入正确的手机号!");
+          return false;
+        };
+        androidIos.loading("正在登录");
+        $.ajax({
+          type: "POST",
+          url: androidIos.ajaxHttp() + "/weChatLogin",
+          data:JSON.stringify({
+            userCode : _this.mobile,
+            checkCode : _this.password
+          }),
+          contentType: "application/json;charset=utf-8",
+          dataType: "json",
+          timeout: 30000,
+          success: function (weChatLogin) {
+            if (weChatLogin.success == "1") {
+              androidIos.setcookie("MESSAGEWX",JSON.stringify({
+                userCode:_this.mobile,
+              }),80);
+              _this.$cjj("登录成功");
+              setTimeout(function () {
+                _this.$router.go(-1);
+              },500)
+            }else{
+              androidIos.second(weChatLogin.message);
+            }
+          },
+          complete: function (XMLHttpRequest, status) { //请求完成后最终执行参数
+            $("#common-blackBox").remove();
+            if (status == 'timeout') { //超时,status还有success,error等值的情况
+              androidIos.second("当前状况下网络状态差，请检查网络！");
+            } else if (status == "error") {
+              androidIos.second("当前状况下网络状态差，请检查网络！");
+              /*androidIos.errorwife();*/
+            }
+          }
+        });
       },
       filterInput:function () {
         var _this = this;

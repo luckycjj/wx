@@ -7,6 +7,14 @@ var androidIos = {
     var http = 'http://222.73.159.76:8085';
     return http;
   },
+  orderPeopleYes:function () {
+    var cookie = androidIos.getcookie("MESSAGEWX");
+    if(cookie == ""){
+       return false;
+    }else{
+       return true;
+    }
+  },
   first:function(message){
     $(".tanBox-bigBox").remove();
     $("body").append("<div class='tanBox-bigBox'>" +
