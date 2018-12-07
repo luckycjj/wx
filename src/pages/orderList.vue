@@ -5,21 +5,21 @@
       <div v-for="(item,index) in list" :id="'mescroll' + index" :class="index != tabShow ? 'hide' :''" class="mescroll">
         <ul :id="'dataList' + index" class="data-list">
           <li v-for="(items,indexs) in item.prolist">
-            <h1>订单编号：{{items.vbillno}}<span :class="items.status*1 < 5  && items.status*1 >= 0? 'groupBefore' : 'groupAfter'" v-html="items.status*1 < 5  && items.status*1 >= 0? '待签收' : '已签收'"></span></h1>
+            <h1>订单编号：{{items.invNo}}<span :class="items.status*1 < 80  && items.status*1 >= 0? 'groupBefore' : 'groupAfter'" v-html="items.status*1 < 80  && items.status*1 >= 0? '待签收' : '已签收'"></span></h1>
             <div class="proBox">
-              <div class="proBoxList" v-for="(pro,proIndex) in items.itemDaos">
-                <h4>司机：小吴</h4>
-                <h5>货品名称：{{pro.goodsName}}</h5>
+              <div class="proBoxList">
+                <h4>司机：{{items.driverName}}</h4>
+                <h5>货品名称：{{items.goodName}}</h5>
                 <div class="clearBoth"></div>
-                <h6>货品数量：{{pro.num}}件<span v-if="pro.weight*1 > 0">/{{pro.weight*1}}吨</span><span v-if="pro.volume*1 > 0">/{{pro.volume*1}}立方米</span></h6>
+                <h6>货品数量：{{items.num}}件<span v-if="items.weight*1 > 0">/{{items.weight*1/1000}}吨</span><span v-if="items.volume*1 > 0">/{{items.volume*1}}立方米</span></h6>
               </div>
-              <h6 class="deliDateTime">到货时间：{{items.arriDate}}</h6>
+              <h6 class="deliDateTime">到货时间：{{items.date}}</h6>
             </div>
             <div class="buttonTap">
-               <div class="leftButton" :class="items.status*1 < 5  && items.status*1 >= 0? '' : 'width100'" @click="telCall('021-50929122')">
+               <div class="leftButton" :class="items.status*1 < 80  && items.status*1 >= 0? '' : 'width100'" @click="telCall('021-50929122')">
                     联系客服
                </div>
-               <div class="rightButton" v-if="items.status*1 < 5   && items.status*1 >= 0">
+               <div class="rightButton" v-if="items.status*1 < 80   && items.status*1 >= 0" @click="wxSao()">
                    扫码签收
                </div>
               <div class="clearBoth"></div>
@@ -178,6 +178,9 @@
             });
           },100)
         }
+      },
+      wxSao:function () {
+        androidIos.second("此功能还在开发")
       },
       telCall:function (tel) {
         androidIos.telCall(tel);
