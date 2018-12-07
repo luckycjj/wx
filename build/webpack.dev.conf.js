@@ -9,6 +9,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const ZipPlugin = require('zip-webpack-plugin')
+const AppCachePlugin = require('../plugins/webpack-app-cache-plugin')
+const AppVersionPlugin = require('../plugins/webpack-app-version-plugin')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -25,7 +28,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [
-        { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
+        { from: /.*/, to: path.join(config.dev.assetsPublicPath, 'index.html') },
       ],
     },
     hot: true,
@@ -44,7 +47,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       poll: config.dev.poll,
     }
   },
-  plugins: [
+    plugins: [
     new webpack.DefinePlugin({
       'process.env': require('../config/dev.env')
     }),
@@ -58,13 +61,23 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       inject: true
     }),
     // copy custom static assets
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../static'),
-        to: config.dev.assetsSubDirectory,
-        ignore: ['.*']
-      }
-    ])
+      new CopyWebpackPlugin([
+        {
+          from: path.resolve(__dirname, '../static'),
+          to: config.dev.assetsSubDirectory,
+          ignore: ['.*']
+        }
+      ]),
+      new AppCachePlugin({
+        exclude: [/\.(jpg|png|gif|zip)$/, 'index.html'],
+        routeBase: '/hybrid',
+      }),
+      new ZipPlugin({
+        path:path.join(__dirname,'../dist'),
+        filename: 'dist.zip',
+       /* exclude: [/\.(jpg|png|gif|zip)$/]*/
+      }),
+      new AppVersionPlugin({})
   ]
 })
 

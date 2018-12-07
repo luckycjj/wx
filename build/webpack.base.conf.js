@@ -1,11 +1,11 @@
-'use strict'
 var webpack = require('webpack')
+'use strict'
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
@@ -28,9 +28,9 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath: process.env.NODE_ENV === 'production' ?
+      config.build.assetsPublicPath :
+      config.dev.assetsPublicPath
   },
   plugins: [
     new webpack.ProvidePlugin({
@@ -43,6 +43,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
+      'jquery': 'jquery/dist/jquery.min.js',
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
     }
@@ -64,7 +65,7 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 10000,
+          limit: 20000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }
       },
@@ -85,6 +86,9 @@ module.exports = {
         }
       }
     ]
+  },
+  externals: {
+    'AMap': 'AMap'
   },
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
