@@ -2,6 +2,7 @@
   <div id="orderLogisticsMore">
     <div id="title" v-title data-title="订单详情"></div>
     <div id="titleText"  style="top:0.72rem">
+      <div id="titleGoback"  @touchend="goback()" ></div>
       <p v-html=" pdlist[0].orderTypeName"></p>
       <div class="callUs" @touchend="telCall('021-50929122')"><div class="callUsLine"></div>物流客服</div>
     </div>
@@ -166,6 +167,10 @@
       },
       liTouchend:function (event) {
         var _this = this;
+      },
+      goback:function () {
+        var _this = this;
+        _this.$router.go(-1);
       },
       telCall:function (tel) {
         androidIos.telCall(tel);
@@ -358,6 +363,18 @@
   }
   </style>
 <style scoped>
+  #titleGoback{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    height: auto;
+    width: 1.5rem;
+    background-image: url("../images/titlejian.png");
+    background-position: 35% 50%;
+    background-repeat: no-repeat;
+    background-size: 0.2rem 0.3714rem;
+  }
   #titleText{
     position: absolute;
     width:66%;

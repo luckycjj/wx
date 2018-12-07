@@ -11,7 +11,7 @@
     </div>
     <ul v-if="hisList.length > 0">
       <li><p>历史查询</p></li>
-      <li v-for="(item,index) in hisList">
+      <li v-for="(item,index) in hisList" @click="getHis(item.pk)">
         <h1>{{item.pk}}</h1>
         <h2>{{item.time}}</h2>
         <div class="clearBoth"></div>
@@ -45,6 +45,48 @@
       _this.listGo();
     },
     methods:{
+      getHis:function (number) {
+        var _this = this;
+        _this.number = number;
+        _this.goOrder();
+      },
+      goOrder:function () {
+        var _this = this;
+        sessionStorage.setItem("ORDERPK",_this.number);
+        var listNow = [];
+        if(localStorage.getItem("ORDERLIST") != undefined){
+          listNow = JSON.parse(localStorage.getItem("ORDERLIST"));
+        }
+        for(var i = 0  ; i < listNow.length ; i++){
+          if(listNow[i].pk === _this.number){
+            listNow.splice(i,1);
+            break;
+          }
+        }
+        listNow.unshift({
+          pk : _this.number,
+          time : _this.time()
+        });
+        if(listNow.length > _this.maxLength){
+          listNow.splice(_this.maxLength);
+        }
+        localStorage.setItem("ORDERLIST",JSON.stringify(listNow));
+        _this.$router.push({path:"/orderMore",query:{pk:_this.number}});
+      },
+      time:function () {
+        var _this = this;
+        var time = new Date();
+        var year = time.getFullYear();
+        var month = time.getMonth() + 1 ;
+        var day = time.getDate();
+        var hour = time.getHours();
+        var min = time.getMinutes();
+        var sec = time.getSeconds();
+        return year + "-" + _this.ten(month) + "-" + _this.ten(day) + " " + _this.ten(hour) + ":" + _this.ten(min) + ":" + _this.ten(sec);
+      },
+      ten:function (val) {
+         return val < 10 ? "0" + val : val;
+      },
       listGo:function () {
         var _this = this;
         if(localStorage.getItem("ORDERLIST") != undefined){
@@ -68,26 +110,7 @@
           timeout: 30000,
           success: function (orderSearch) {
             if (orderSearch.success == "1") {
-              sessionStorage.setItem("ORDERPK",_this.number);
-              var listNow = [];
-              if(localStorage.getItem("ORDERLIST") != undefined){
-                listNow = JSON.parse(localStorage.getItem("ORDERLIST"));
-              }
-              for(var i = 0  ; i < listNow.length ; i++){
-                if(listNow[i].pk === _this.number){
-                  listNow.splice(i,1);
-                  break;
-                }
-              }
-              listNow.unshift({
-                pk : _this.number,
-                time :orderSearch.responseTime
-              });
-              if(listNow.length > _this.maxLength){
-                listNow.splice(_this.maxLength);
-              }
-              localStorage.setItem("ORDERLIST",JSON.stringify(listNow));
-              _this.$router.push({path:"/orderMore",query:{pk:_this.number}});
+              _this.goOrder();
             }else{
               androidIos.second(orderSearch.message);
             }
