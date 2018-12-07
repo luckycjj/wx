@@ -122,8 +122,10 @@
     mounted: function () {
       var _this = this;
       androidIos.orderPeopleYes(_this);
-      _this.peopleTel = JSON.parse(androidIos.getcookie("MESSAGEWX")).userCode;
-      _this.go();
+      if(androidIos.getcookie("MESSAGEWX") != ""){
+        _this.peopleTel = JSON.parse(androidIos.getcookie("MESSAGEWX")).userCode;
+        _this.go();
+      }
     },
     methods: {
       go:function () {
@@ -223,7 +225,7 @@
               if (status == 'timeout') { //超时,status还有success,error等值的情况
                 androidIos.second("当前状况下网络状态差，请检查网络！")
               } else if (status == "error") {
-                androidIos.errorwife();
+                androidIos.second("网络请求超时");
               }
             }
           });
@@ -319,7 +321,7 @@
             if(status=='timeout'){//超时,status还有success,error等值的情况
               androidIos.second("网络请求超时");
             }else if(status=='error'){
-              androidIos.errorwife();
+              androidIos.second("网络请求超时");
             }
           }
         });
@@ -401,7 +403,7 @@
             if(status=='timeout'){//超时,status还有success,error等值的情况
               androidIos.second("网络请求超时");
             }else if(status=='error'){
-              androidIos.errorwife();
+              androidIos.second("网络请求超时");
             }
           }
         });
@@ -577,7 +579,7 @@
               if(status=='timeout'){//超时,status还有success,error等值的情况
                 androidIos.second("网络请求超时");
               }else if(status=='error'){
-                androidIos.errorwife();
+                androidIos.second("网络请求超时");
               }
             }
           })
@@ -640,7 +642,7 @@
               if(status=='timeout'){//超时,status还有success,error等值的情况
                 androidIos.second("网络请求超时");
               }else if(status=='error'){
-                androidIos.errorwife();
+                androidIos.second("网络请求超时");
               }
             }
           })

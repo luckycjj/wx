@@ -142,4 +142,16 @@
     background-repeat: no-repeat;
     margin:10% auto 0 auto;
   }
+  .mescroll-downwarp .downwarp-progress{
+    background-image: url("./images/down.gif");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+  }
+  .mescroll-upwarp .upwarp-progress {
+    background-image: url("./images/up.gif");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+  }
 </style>

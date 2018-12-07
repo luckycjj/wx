@@ -81,7 +81,6 @@
                 androidIos.second("当前状况下网络状态差，请检查网络！");
               } else if (status == "error") {
                 androidIos.second("当前状况下网络状态差，请检查网络！");
-                /*androidIos.errorwife();*/
               }
             }
           });

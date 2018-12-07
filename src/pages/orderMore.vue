@@ -4,11 +4,11 @@
     <div id="titleText"  style="top:0.72rem">
       <div id="titleGoback"  @touchend="goback()" ></div>
       <p v-html=" pdlist[0].orderTypeName"></p>
-      <div class="callUs" @touchend="telCall('021-50929122')"><div class="callUsLine"></div>物流客服</div>
+      <div class="callUs" @click="telCall('021-50929122')"><div class="callUsLine"></div>物流客服</div>
     </div>
     <div id="container"></div>
     <div id="panel"></div>
-    <div id="lookOrderMore" v-if="moveSure"  @touchend="mapLookS()">
+    <div id="lookOrderMore" v-if="moveSure"  @touchend="click()">
       查看
     </div>
     <li  @touchstart="liTouchstart($event)" @touchmove="liTouchmove($event)"  v-if="!moveSure" :style="{top:Ultop+'rem'}"  id="messageBigBox" v-for="item in pdlist">
@@ -263,7 +263,7 @@
             if(status=='timeout'){//超时,status还有success,error等值的情况
               androidIos.second("网络请求超时");
             }else if(status=='error'){
-              androidIos.errorwife();
+              androidIos.second("网络请求超时");
             }
           }
         });

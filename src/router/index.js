@@ -5,6 +5,7 @@ import signIn from '../pages/signIn'
 import search from '../pages/search'
 import orderMore from '../pages/orderMore'
 import histroySearch from '../pages/histroySearch'
+import orderList from '../pages/orderList'
 Vue.use(Router)
 Vue.directive('title', {
   inserted: function (el, binding) {
@@ -26,6 +27,11 @@ Vue.filter('time',function (time,type) {
 })
 export default new Router({
   routes: [
+    {
+      path: '/orderList',
+      name: 'orderList',
+      component: orderList
+    },
     {
       path: '/histroySearch',
       name: 'histroySearch',
