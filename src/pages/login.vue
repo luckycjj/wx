@@ -7,7 +7,7 @@
     </div>
     <div class="modelView">
       <input autocomplete="off"  @input="filterInput()" maxlength="6"  v-model="password" placeholder="请输入验证码"/>
-      <span class="verificationCome" @touchend="verificationCome()">{{name}}</span>
+      <div class="verificationCome" @touchend="verificationCome()">{{name}}</div>
       <div class="clearBoth"></div>
     </div>
     <button @touchend="loginOn()">登录</button>
@@ -132,6 +132,14 @@
         }
       },
     },
+    beforeDestroy:function () {
+      var _this = this;
+      clearInterval(_this.nameSet);
+    },
+    destroy:function () {
+      var _this = this;
+      clearInterval(_this.nameSet);
+    }
   }
 </script>
 
@@ -172,7 +180,7 @@
     border-radius: 0.16rem;
   }
   .modelView input{
-    width:4.84rem;
+    width:4.2rem;
     height: 0.5rem;
     margin-top: 0.435rem;
     background: transparent;
@@ -209,10 +217,15 @@
     position: absolute;
     right:0rem;
     top:50%;
-    margin-top: -0.16rem;
-    line-height: 0.32rem;
-    color:#fff!important;
-    font-size: 0.32rem!important;
+    margin-top: -0.375rem;
+    line-height: 0.35rem;
+    color:#A5BAE0!important;
+    font-size: 0.35rem!important;
     margin-right: 0.42rem;
+    border: 1px solid #A5BAE0;
+    padding: 0.2rem 0rem;
+    width: 2.32rem;
+    text-align: center;
+    border-radius: 0.2rem;
   }
 </style>

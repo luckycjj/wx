@@ -7,12 +7,15 @@ var androidIos = {
     var http = 'http://222.73.159.76:8085';
     return http;
   },
-  orderPeopleYes:function () {
+  orderPeopleYes:function (self) {
     var cookie = androidIos.getcookie("MESSAGEWX");
     if(cookie == ""){
+       self.$router.push({path:"/login"});
        return false;
     }else{
-       return true;
+      androidIos.setcookie("MESSAGEWX",JSON.stringify({
+        userCode:JSON.parse(cookie).userCode,
+      }),80);
     }
   },
   first:function(message){

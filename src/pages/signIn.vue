@@ -121,11 +121,8 @@
     },
     mounted: function () {
       var _this = this;
-      if(androidIos.orderPeopleYes()){
-        _this.peopleTel = JSON.parse(androidIos.getcookie("MESSAGEWX")).userCode;
-      }else{
-        _this.$router.push({path:"/login"});
-      }
+      androidIos.orderPeopleYes(_this);
+      _this.peopleTel = JSON.parse(androidIos.getcookie("MESSAGEWX")).userCode;
       _this.go();
     },
     methods: {
