@@ -8,7 +8,7 @@
     </div>
     <div id="container"></div>
     <div id="panel"></div>
-    <div id="lookOrderMore" v-if="moveSure"  @touchend="click()">
+    <div id="lookOrderMore" v-if="moveSure"  @click="mapLookS()">
       查看
     </div>
     <li  @touchstart="liTouchstart($event)" @touchmove="liTouchmove($event)"  v-if="!moveSure" :style="{top:Ultop+'rem'}"  id="messageBigBox" v-for="item in pdlist">
