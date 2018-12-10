@@ -3,7 +3,7 @@ import {bomb} from "./zujian";
 var androidIos = {
   ajaxHttp: function () {
     // var http = 'http://10.10.10.187:8085';
-    //var http = 'http://10.10.10.153:8085';
+    //var http = 'http://10.10.10.215:8085';
     var http = 'http://222.73.159.76:8085';
     return http;
   },
@@ -13,9 +13,9 @@ var androidIos = {
        self.$router.push({path:"/login"});
        return false;
     }else{
-      androidIos.setcookie("MESSAGEWX",JSON.stringify({
+        androidIos.setcookie("MESSAGEWX",JSON.stringify({
         userCode:JSON.parse(cookie).userCode,
-      }),80);
+      }),2);
     }
   },
   first:function(message){

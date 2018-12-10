@@ -63,7 +63,7 @@
             if (weChatLogin.success == "1") {
               androidIos.setcookie("MESSAGEWX",JSON.stringify({
                 userCode:_this.mobile,
-              }),80);
+              }),2);
               _this.$cjj("登录成功");
               setTimeout(function () {
                 _this.$router.go(-1);

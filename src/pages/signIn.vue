@@ -121,7 +121,6 @@
     },
     mounted: function () {
       var _this = this;
-      androidIos.orderPeopleYes(_this);
       if(androidIos.getcookie("MESSAGEWX") != ""){
         _this.peopleTel = JSON.parse(androidIos.getcookie("MESSAGEWX")).userCode;
         _this.go();
@@ -783,7 +782,7 @@
     height: auto!important;
   }
   #signYes{
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left:0;
     height: auto;

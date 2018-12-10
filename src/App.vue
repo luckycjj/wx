@@ -5,9 +5,64 @@
 </template>
 
 <script>
-  import  {fontSize} from './js/windownFont'
+  import  {fontSize} from './js/windownFont';
+  import {androidIos} from "./js/app";
+  import {bomb} from "./js/zujian";
   export default {
-    name: 'App'
+    name: 'App',
+    data(){
+      return{
+        checkUrl:["/orderList","/signIn"],
+      }
+    },
+   mounted(){
+      var _this = this;
+      var http  = _this.getHttp();
+      if(_this.checkUrl.indexOf(http) != -1){
+        androidIos.orderPeopleYes(_this);
+      }
+     $.ajax({
+       type: "POST",
+       url: androidIos.ajaxHttp() + "/weixin/getParam",
+       data:{
+         url: location.href.split('#')[0] ,
+         source:"wx",
+       },
+       dataType: "json",
+       timeout: 30000,
+       success: function (getJsapiTicket) {
+         if (getJsapiTicket.success == "1") {
+           _this.wxConfig(getJsapiTicket.appId, getJsapiTicket.timestamp, getJsapiTicket.noncestr, getJsapiTicket.signature);
+         }else{
+           androidIos.second(getJsapiTicket.message);
+         }
+       },
+       complete: function (XMLHttpRequest, status) { //请求完成后最终执行参数
+         if (status == 'timeout') { //超时,status还有success,error等值的情况
+           androidIos.second("当前状况下网络状态差，请检查网络！");
+         } else if (status == "error") {
+           androidIos.second("当前状况下网络状态差，请检查网络！");
+         }
+       }
+     });
+     /* _this.wxConfig(o.appId, o.timestamp, o.nonceStr, o.signature);*/
+   },
+    methods:{
+        getHttp(){
+            var _this = this;
+            return _this.$route.path
+        },
+        wxConfig(_appId, _timestamp, _nonceStr, _signature) {
+            wx.config({
+              debug: false, //true 调试模式 返回信息  上线使用false
+              appId: _appId,
+              timestamp: _timestamp,
+              nonceStr: _nonceStr,
+              signature: _signature,
+              jsApiList: ['scanQRCode']
+            });
+       }
+    }
   }
 </script>
 

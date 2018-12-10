@@ -10,7 +10,6 @@ Vue.use(Router)
 Vue.directive('title', {
   inserted: function (el, binding) {
     document.title = el.dataset.title
-   /* document.getElementById('title').innerText = document.title*/
   }
 });
 Vue.filter('time',function (time,type) {

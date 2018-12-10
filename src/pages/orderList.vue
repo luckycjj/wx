@@ -5,7 +5,7 @@
       <div v-for="(item,index) in list" :id="'mescroll' + index" :class="index != tabShow ? 'hide' :''" class="mescroll">
         <ul :id="'dataList' + index" class="data-list">
           <li v-for="(items,indexs) in item.prolist">
-            <h1>订单编号：{{items.invNo}}<span :class="items.status*1 < 80  && items.status*1 >= 0? 'groupBefore' : 'groupAfter'" v-html="items.status*1 < 80  && items.status*1 >= 0? '待签收' : '已签收'"></span></h1>
+            <h1>订单编号：{{items.invNo}}<span :class="items.status*1 < 80  && items.status*1 >= 0? 'groupBefore' : 'groupAfter'" v-html="items.status*1 < 70  ? '待签收' : items.status*1 == 70 ? '部分签收' : '已签收'"></span></h1>
             <div class="proBox">
               <div class="proBoxList">
                 <h4>司机：{{items.driverName}}</h4>
@@ -55,7 +55,6 @@
     },
     mounted:function () {
       var _this = this;
-      androidIos.orderPeopleYes(_this);
       if(androidIos.getcookie("MESSAGEWX") != ""){
         _this.peopleTel = JSON.parse(androidIos.getcookie("MESSAGEWX")).userCode;
         _this.go();
@@ -180,7 +179,47 @@
         }
       },
       wxSao:function () {
-        androidIos.second("此功能还在开发")
+        var _this = this;
+        wx.scanQRCode({
+          // 默认为0，扫描结果由微信处理，1则直接返回扫描结果
+          needResult : 1,
+          scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+          success : function(res) {
+            var codes = res.resultStr;
+            codes = JSON.parse(codes);
+            if(codes.type != 1){
+                androidIos.second("不是正确的签收码");
+            }else{
+              androidIos.loading("正在获取");
+              $.ajax({
+                type: "POST",
+                url: androidIos.ajaxHttp() + "/order/getGoodsDetail",
+                data:JSON.stringify({
+                  userCode:_this.peopleTel,
+                  pk:codes.pk,
+                  source:"wx",
+                }),
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (getGoodsDetail) {
+                  if(getGoodsDetail.success == "1"){
+                    _this.$router.push({path:'/signIn',query:{pk:codes.pk,}});
+                  }else{
+                    androidIos.second(getGoodsDetail.message);
+                  }
+                },
+                complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
+                  $("#common-blackBox").remove();
+                  if(status=='timeout'){//超时,status还有success,error等值的情况
+                    androidIos.second("网络请求超时");
+                  }else if(status=='error'){
+                    androidIos.second("网络请求超时");
+                  }
+                }
+              });
+            }
+          }
+        });
       },
       telCall:function (tel) {
         androidIos.telCall(tel);
