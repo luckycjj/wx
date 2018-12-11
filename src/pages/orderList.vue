@@ -5,7 +5,7 @@
       <div v-for="(item,index) in list" :id="'mescroll' + index" :class="index != tabShow ? 'hide' :''" class="mescroll">
         <ul :id="'dataList' + index" class="data-list">
           <li v-for="(items,indexs) in item.prolist">
-            <h1>订单编号：{{items.invNo}}<span :class="items.status*1 < 80  && items.status*1 >= 0? 'groupBefore' : 'groupAfter'" v-html="items.status*1 < 70  ? '待签收' : items.status*1 == 70 ? '部分签收' : '已签收'"></span></h1>
+            <h1>订单编号：{{items.invNo}}<span :class="items.status != '已签收' ? 'groupBefore' : 'groupAfter'" v-html="items.status"></span></h1>
             <div class="proBox">
               <div class="proBoxList">
                 <h4>司机：{{items.driverName}}</h4>
@@ -16,10 +16,10 @@
               <h6 class="deliDateTime">到货时间：{{items.date}}</h6>
             </div>
             <div class="buttonTap">
-               <div class="leftButton" :class="items.status*1 < 80  && items.status*1 >= 0? '' : 'width100'" @click="telCall('021-50929122')">
+               <div class="leftButton" :class="items.status != '已签收' ? '' : 'width100'" @click="telCall('021-50929122')">
                     联系客服
                </div>
-               <div class="rightButton" v-if="items.status*1 < 80   && items.status*1 >= 0" @click="wxSao()">
+               <div class="rightButton" v-if="items.status != '已签收' " @click="wxSao()">
                    扫码签收
                </div>
               <div class="clearBoth"></div>
