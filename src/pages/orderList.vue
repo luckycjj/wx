@@ -1,6 +1,6 @@
 <template>
   <div id="trackList" style="top:1.3rem;">
-    <div id="title"  v-title data-title="订单查询"></div>
+    <div id="title"  v-title data-title="签收"></div>
     <p id="loginBox" v-if="peopleTel != ''" @click="loginOut()">当前登录账号{{peopleTel | checkTel}},点击此处,可<span>更换手机号</span>签收</p>
     <div id="showBox">
       <div v-for="(item,index) in list" :id="'mescroll' + index" :class="index != tabShow ? 'hide' :''" class="mescroll">
