@@ -1,6 +1,7 @@
 <template>
   <div id="trackList" style="top:1.3rem;">
     <div id="title"  v-title data-title="订单查询"></div>
+    <p id="loginBox" v-if="peopleTel != ''" @click="loginOut()">当前登录账号{{peopleTel | checkTel}},点击此处,可<span>更换手机号</span>签收</p>
     <div id="showBox">
       <div v-for="(item,index) in list" :id="'mescroll' + index" :class="index != tabShow ? 'hide' :''" class="mescroll">
         <ul :id="'dataList' + index" class="data-list">
@@ -55,12 +56,17 @@
     },
     mounted:function () {
       var _this = this;
+      androidIos.orderPeopleYes(_this);
       if(androidIos.getcookie("MESSAGEWX") != ""){
         _this.peopleTel = JSON.parse(androidIos.getcookie("MESSAGEWX")).userCode;
         _this.go();
       }
     },
     methods:{
+      loginOut:function () {
+        var _this = this;
+        _this.$router.push({ path : "/login" });
+      },
       go:function () {
         var _this = this;
         var trackTap = sessionStorage.getItem("trackListTap");
@@ -249,16 +255,26 @@
   }
 </style>
 <style scoped>
+  #loginBox{
+    text-align: center;
+    font-size: 0.32rem;
+    color:#666;
+    line-height: 0.8rem;
+  }
+  #loginBox span{
+     font-size: 0.32rem;
+    color: #1869A9;
+  }
    .mescroll{
      position: absolute;
-     top:0;
+     top:0.8rem;
      bottom:0;
      overflow: scroll;
      width:100%;
      height: auto;
    }
    .mescroll ul{
-     margin-top: 0.48rem;
+     margin-top: 0.1rem;
    }
    .mescroll li{
        width:9.1rem;

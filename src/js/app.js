@@ -14,8 +14,9 @@ var androidIos = {
        return false;
     }else{
         androidIos.setcookie("MESSAGEWX",JSON.stringify({
-        userCode:JSON.parse(cookie).userCode,
-      }),2);
+           userCode:JSON.parse(cookie).userCode,
+        }),3);
+        localStorage.setItem("NOWTEL",JSON.parse(cookie).userCode);
     }
   },
   first:function(message){

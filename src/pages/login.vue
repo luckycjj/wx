@@ -28,11 +28,13 @@
     },
     mounted:function () {
       var _this = this;
+      androidIos.delCookie("MESSAGEWX");
+      var tel = localStorage.getItem("NOWTEL");
+      if(tel != undefined){
+        _this.mobile = tel ;
+      }
     },
     methods:{
-      go:function () {
-
-      },
       loginOn:function () {
         var _this = this;
         if(_this.mobile == ""){
@@ -63,7 +65,8 @@
             if (weChatLogin.success == "1") {
               androidIos.setcookie("MESSAGEWX",JSON.stringify({
                 userCode:_this.mobile,
-              }),2);
+              }),3);
+              localStorage.setItem("NOWTEL",_this.mobile);
               _this.$cjj("登录成功");
               setTimeout(function () {
                 _this.$router.go(-1);

@@ -24,6 +24,16 @@ Vue.filter('time',function (time,type) {
     return list2.join(":");
   }
 })
+Vue.filter('checkTel',function (val) {
+  var len = val.length;
+  var num1 = val.substring(0,3);
+  var num2 = val.substring(len - 4);
+  var num3 = "";
+  for(var  i  = 0  ; i < len - 7 ; i++){
+      num3 += "*";
+  }
+  return  num1 + num3 + num2
+})
 export default new Router({
   routes: [
     {
