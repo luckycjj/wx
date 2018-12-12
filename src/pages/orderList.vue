@@ -65,6 +65,7 @@
     methods:{
       loginOut:function () {
         var _this = this;
+        androidIos.delCookie("MESSAGEWX");
         _this.$router.push({ path : "/login" });
       },
       go:function () {
@@ -157,7 +158,7 @@
               data:JSON.stringify({
                 page:pageNum,
                 size:pageSize,
-                userCode:"15001962939",
+                userCode:_this.peopleTel,
                 source:"wx",
               }),
               contentType: "application/json;charset=utf-8",

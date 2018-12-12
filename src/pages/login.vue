@@ -28,7 +28,6 @@
     },
     mounted:function () {
       var _this = this;
-      androidIos.delCookie("MESSAGEWX");
       var tel = localStorage.getItem("NOWTEL");
       if(tel != undefined){
         _this.mobile = tel ;
