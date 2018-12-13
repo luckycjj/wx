@@ -533,10 +533,10 @@
             }
           }
           var number = $("#star_grade .grade").text();
-          if(list.length == 0 && _this.normalSignRemark == ""){
+         /* if(list.length == 0 && _this.normalSignRemark == ""){
             bomb.first("请选择或填写内容");
             return false;
-          }
+          }*/
           var listImg = [];
           for(i = 0 ; i< _this.imgList.length ;i++){
             listImg.push(_this.imgList[i].httpfile)
@@ -672,7 +672,7 @@
           backgroundImageInitial:require('../images/star_hollow.png'),
           backgroundImageOver:require('../images/star_solid.png'),
           unit: '星',
-          grade:0,
+          grade:5,
           height: 0.8* $("html").css("font-size").replace("px", ""),
           width: 0.8* $("html").css("font-size").replace("px", ""),
         });
