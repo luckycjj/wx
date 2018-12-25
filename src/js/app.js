@@ -15,7 +15,7 @@ var androidIos = {
     }else{
         androidIos.setcookie("MESSAGEWX",JSON.stringify({
            userCode:JSON.parse(cookie).userCode,
-        }),0.01);
+        }),3);
         localStorage.setItem("NOWTEL",JSON.parse(cookie).userCode);
     }
   },
