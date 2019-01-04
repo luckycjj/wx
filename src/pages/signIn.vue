@@ -356,10 +356,10 @@
           dataType: "json",
           success: function (getGoodsDetail) {
             if(getGoodsDetail.success == "1"){
-              _this.startJ = getGoodsDetail.deliAddr.addressLatAndLon == undefined ? "120.40" : getGoodsDetail.deliAddr.addressLatAndLon.split(",")[0] ;
-              _this.startW = getGoodsDetail.deliAddr.addressLatAndLon == undefined ? "30.26" : getGoodsDetail.deliAddr.addressLatAndLon.split(",")[1] ;
-              _this.endJ = getGoodsDetail.arriAddr.addressLatAndLon == undefined ? "121.40" : getGoodsDetail.arriAddr.addressLatAndLon.split(",")[0] ;
-              _this.endW = getGoodsDetail.arriAddr.addressLatAndLon == undefined ? "30.36" : getGoodsDetail.arriAddr.addressLatAndLon.split(",")[1] ;
+              _this.startJ = getGoodsDetail.deliAddr == null || getGoodsDetail.deliAddr.addressLatAndLon == undefined ? "120.40" : getGoodsDetail.deliAddr.addressLatAndLon.split(",")[0] ;
+              _this.startW = getGoodsDetail.deliAddr == null || getGoodsDetail.deliAddr.addressLatAndLon == undefined ? "30.26" : getGoodsDetail.deliAddr.addressLatAndLon.split(",")[1] ;
+              _this.endJ = getGoodsDetail.deliAddr == null || getGoodsDetail.arriAddr.addressLatAndLon == undefined ? "121.40" : getGoodsDetail.arriAddr.addressLatAndLon.split(",")[0] ;
+              _this.endW = getGoodsDetail.deliAddr == null || getGoodsDetail.arriAddr.addressLatAndLon == undefined ? "30.36" : getGoodsDetail.arriAddr.addressLatAndLon.split(",")[1] ;
               _this.mapDriver();
               var carLength = getGoodsDetail.carLength != "" && getGoodsDetail.carLength != null ? "(" + getGoodsDetail.carLength + "米)" : "";
               var carModel = getGoodsDetail.carModel != "" && getGoodsDetail.carModel != null ? "(" + getGoodsDetail.carModel + ")" : "";
